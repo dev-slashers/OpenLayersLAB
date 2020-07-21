@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style/ol.css">
+    <link rel="stylesheet" href="style/default.css">
+
+    <title>Leaflet Test!</title>
+</head>
+<body>
+    <div id="map" class="map"></div>
+</body>
+<!-- OpenLayers 4.6.5 -->
+<script src="script/ol.js"></script>
+
+<!-- https://openlayers.org/en/latest/examples/icon.html -->
+<script type="text/javascript">
+
+    // set Icon
+    var icon = new ol.style.Style({
+        image: new ol.style.Icon({
+            anchor: [0, 0],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'pixels',
+            src: 'resource/images/point.png'
+            //src: 'https://openlayers.org/en/latest/examples/data/icon.png'
+        })
+    });
+
+
+    // Set Feature with Geometry
+    var feature = new ol.Feature({
+        geometry: new ol.geom.Point([0, 0]),
+        name: 'Null Island',
+        population: 4000,
+        rainfall: 500
+    });
+
+    // add icon to feature
+    feature.setStyle(icon);
+
+    // Set Source
+    var vectorSource = new ol.source.Vector({
+        features: [feature]
+    });
+
+    // Set Layer
+    var vectorLayer = new ol.layer.Vector({
+        source: vectorSource
+    });
+
+    // Init Map
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            })
+        ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([37.41, 8.82]),
+            zoom: 4
+        })
+    });
+
+    map.addLayer(vectorLayer);
+
+    console.log(map);
+
+</script>
+
+</html>

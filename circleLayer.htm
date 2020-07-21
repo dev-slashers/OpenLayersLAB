@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style/ol.css">
+    <link rel="stylesheet" href="style/default.css">
+
+    <title>Layer Test!</title>
+</head>
+<body>
+
+<div id="map" class="map"></div>
+
+
+<!-- OpenLayers 4.6.5 -->
+<script src="script/ol.js"></script>
+
+<!-- JS --->
+<script>
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            })
+        ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([372.4777221679687, 41.65444507203125]),
+            zoom: 12
+        })
+    });
+    var centerLongitudeLatitude = ol.proj.fromLonLat([372.4777221679687, 41.65444507203125]);
+    var layer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            projection: 'EPSG:4326',
+            // radius = 4000 meters
+            features: [new ol.Feature(new ol.geom.Circle(centerLongitudeLatitude, 4000))]
+        }),
+        style: [
+            new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                    color: 'blue',
+                    width: 3
+                }),
+                fill: new ol.style.Fill({
+                    color: 'rgba(0, 0, 255, 0.1)'
+                })
+            })
+        ]
+    });
+    map.addLayer(layer);
+
+</script>
+
+</body>
+</html>
